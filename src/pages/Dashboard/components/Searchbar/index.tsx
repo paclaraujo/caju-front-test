@@ -43,8 +43,8 @@ export const SearchBar = () => {
     <S.Container>
       <TextField placeholder="Digite um CPF válido" maxLength={14} value={cpfValue} onChange={filterCPF} error={cpfValue.length>= 1 && cpfValue.length < 14 ? 'CPF precisa conter 11 dígitos' : '' } />
       <S.Actions>
-        <IconButton aria-label="refetch">
-          <HiRefresh />
+      <IconButton aria-label="refetch">
+          <HiRefresh onClick={getRegistrations} />
         </IconButton>
         <Button size="large" onClick={() => goToNewAdmissionPage()}>Nova Admissão</Button>
       </S.Actions>
