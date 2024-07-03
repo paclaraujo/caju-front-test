@@ -1,0 +1,1 @@
+export const cpfFormatter = (value: string): string => value.replace(/[.-]/g, '');
