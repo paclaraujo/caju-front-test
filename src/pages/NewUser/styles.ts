@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { IconButtonStyled } from "~/components/IconButton/styles";
+import styled from 'styled-components';
+import { IconButtonStyled } from '~/components/IconButton/styles';
 
 export const Container = styled.div`
   display: flex;
@@ -27,4 +27,4 @@ export const Form = styled.form`
   div {
     margin: 8px 0;
   }
-`
+`;

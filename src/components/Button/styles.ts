@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 const buttonVariantStyles = {
   review: '#ff8858',
@@ -7,12 +7,12 @@ const buttonVariantStyles = {
 };
 
 export type ButtonProps = {
-  size?: "large" | "small";
-  variant?: "review" | "approve" | "reprove";
+  size?: 'large' | 'small';
+  variant?: 'review' | 'approve' | 'reprove';
   color?: string;
   children: React.ReactNode;
   onClick?: () => void;
-  type?: "button" | "submit" | "reset" | undefined;
+  type?: 'button' | 'submit' | 'reset' | undefined;
 };
 
 export const largeButtonStyles = css`
@@ -33,12 +33,12 @@ export const smallButtonStyles = css<ButtonProps>`
   border-radius: 4px;
   padding: 4px 16px;
   background-color: ${({variant}) => variant ? buttonVariantStyles[variant] : 'none'};
-  color: ${(props) => props.color ?? "#000"};
+  color: ${(props) => props.color ?? '#000'};
 `;
 
 export const StyledButton = styled.button<ButtonProps>`
   outline: none;
   border: none;
   cursor: pointer;
-  ${(props) => (props.size === "large" ? largeButtonStyles : smallButtonStyles)}
+  ${(props) => (props.size === 'large' ? largeButtonStyles : smallButtonStyles)}
 `;

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Card = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ export const Actions = styled.div<{ status: any }>`
   margin-top: 8px;
   display: flex;
   justify-content: ${({ status }) =>
-    status === "APPROVED" ? "flex-end" : "space-between"};
+    status === 'APPROVED' ? 'flex-end' : 'space-between'};
   align-items: center;
   gap: 4px;
 

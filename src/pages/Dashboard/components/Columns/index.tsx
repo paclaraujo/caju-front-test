@@ -1,15 +1,15 @@
 
-import * as S from "./styles";
-import RegistrationCard from "../RegistrationCard";
-import { RegistrationContext } from "~/contexts/RegistrationContext";
-import { useContext } from "react";
-import { Registration } from "~/types/types";
-import Spinner from "~/components/Spinner";
+import * as S from './styles';
+import RegistrationCard from '../RegistrationCard';
+import { RegistrationContext } from '~/contexts/RegistrationContext';
+import { useContext } from 'react';
+import { Registration } from '~/types/types';
+import Spinner from '~/components/Spinner';
 
 const allColumns = [
-  { status: 'REVIEW', title: "Pronto para revisar" },
-  { status: 'APPROVED', title: "Aprovado" },
-  { status: 'REPROVED', title: "Reprovado" },
+  { status: 'REVIEW', title: 'Pronto para revisar' },
+  { status: 'APPROVED', title: 'Aprovado' },
+  { status: 'REPROVED', title: 'Reprovado' },
 ];
 
 const Collumns = () => {
@@ -25,7 +25,7 @@ const Collumns = () => {
                 {collum.title}
               </S.TitleColumn>
               <S.CollumContent loading={isLoading ? 'loading' : ''}>
-                { isLoading ? <Spinner /> : 
+                { isLoading ? <Spinner /> :
                   registrations?.filter((registration: Registration) => registration.status === collum.status).map((registration: Registration) => {
                     return (
                       <RegistrationCard

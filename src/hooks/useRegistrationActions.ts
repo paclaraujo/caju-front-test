@@ -1,6 +1,12 @@
 import { useContext } from 'react';
-import axios from 'axios';
 import { RegistrationContext } from '~/contexts/RegistrationContext';
+import {
+  getRegistrationsAction,
+  getRegistrationByCpfAction,
+  createRegistrationAction,
+  updateRegistrationStatusAction,
+  deleteRegistrationAction
+} from '~/api/registrationActions';
 import { Registration } from '~/types/types';
 
 export const useRegistrationActions = () => {
@@ -9,10 +15,10 @@ export const useRegistrationActions = () => {
   const getRegistrations = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('http://localhost:3000/registrations');
+      const response = await getRegistrationsAction();
       setRegistrations(response.data);
     } catch (error) {
-      return `Error fetching registrations: ${error}`;
+      return error;
     }
     setIsLoading(false);
   };
@@ -20,10 +26,10 @@ export const useRegistrationActions = () => {
   const getRegistrationByCpf = async (cpf: string) => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3000/registrations?cpf=${cpf}`);
+      const response = await getRegistrationByCpfAction(cpf);
       setRegistrations(response.data);
     } catch (error) {
-      `Error fetching registration by CPF: ${error}`;
+      return error;
     }
     setIsLoading(false);
   };
@@ -31,17 +37,17 @@ export const useRegistrationActions = () => {
   const createRegistration = async (data: Registration) => {
     setIsLoading(true);
     try {
-      return await axios.post("http://localhost:3000/registrations", data);
+      await createRegistrationAction(data);
     } catch (error) {
-      return `Error posting registration status: ${error}`;
+      return error;
     }
     setIsLoading(false);
-  }
+  };
 
   const updateRegistrationStatus = async (data: Registration, status: 'REVIEW' | 'REPROVED' | 'APPROVED') => {
     setIsLoading(true);
     try {
-      await axios.put(`http://localhost:3000/registrations/${data.id}`, { ...data, status });
+      await updateRegistrationStatusAction(data, status);
       setRegistrations((prevState) =>
         prevState.map((registration) => {
           if (registration.id === data.id) return { ...registration, status };
@@ -49,7 +55,7 @@ export const useRegistrationActions = () => {
         })
       );
     } catch (error) {
-      return `Error updating registration status: ${error}`;
+      return error;
     }
     setIsLoading(false);
   };
@@ -57,12 +63,12 @@ export const useRegistrationActions = () => {
   const deleteRegistration = async (data: Registration) => {
     setIsLoading(true);
     try {
-      await axios.delete(`http://localhost:3000/registrations/${data.id}`);
+      await deleteRegistrationAction(data);
       setRegistrations((prevState) =>
         prevState.filter((registration) => registration.id !== data.id)
       );
     } catch (error) {
-      return `Error deleting registration: ${error}`;
+      return error;
     }
     setIsLoading(false);
   };

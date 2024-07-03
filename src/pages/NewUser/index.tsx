@@ -1,17 +1,17 @@
-import TextField from "~/components/TextField";
-import * as S from "./styles";
-import Button from "~/components/Button";
-import { HiOutlineArrowLeft } from "react-icons/hi";
-import { IconButton } from "~/components/IconButton";
-import { useHistory } from "react-router-dom";
-import routes from "~/router/routes";
-import { useForm, SubmitHandler } from "react-hook-form";
-import cpfCheck from "cpf-check";
-import { cpfMask } from "~/utils/cpfMask";
-import { useRegistrationActions } from "~/hooks/useRegistrationActions";
-import { cpfFormatter } from "~/utils/cpfFormatter";
+import TextField from '~/components/TextField';
+import * as S from './styles';
+import Button from '~/components/Button';
+import { HiOutlineArrowLeft } from 'react-icons/hi';
+import { IconButton } from '~/components/IconButton';
+import { useHistory } from 'react-router-dom';
+import routes from '~/router/routes';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import cpfCheck from 'cpf-check';
+import { cpfMask } from '~/utils/cpfMask';
+import { useRegistrationActions } from '~/hooks/useRegistrationActions';
+import { cpfFormatter } from '~/utils/cpfFormatter';
 import { ModalContext } from '~/contexts/ModalContext';
-import { useContext } from "react";
+import { useContext } from 'react';
 
 interface IFormInput {
   employeeName: string;
@@ -44,23 +44,22 @@ const NewUserPage = () => {
         try {
           await createRegistration({
             ...data,
-            status: "REVIEW",
+            status: 'REVIEW',
             cpf: cpfFormatter(data.cpf),
-            admissionDate: new Date(data.admissionDate).toLocaleDateString("pt-BR"),
+            admissionDate: new Date(data.admissionDate).toLocaleDateString('pt-BR'),
           });
           goToHome();
         } catch (error) {
-          console.error("Error creating registration:", error);
           return error;
         }
       }
-    })
-  }
+    });
+  };
 
   const handleCPFChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const maskedCPF = cpfMask(e.target.value);
-    setValue("cpf", maskedCPF, { shouldValidate: true });
-    clearErrors("cpf");
+    setValue('cpf', maskedCPF, { shouldValidate: true });
+    clearErrors('cpf');
   };
 
   return (
@@ -73,11 +72,11 @@ const NewUserPage = () => {
           <TextField
             placeholder="Nome"
             label="Nome"
-            {...register("employeeName", {
-              required: "Nome é obrigatório",
+            {...register('employeeName', {
+              required: 'Nome é obrigatório',
               validate: {
                 validName: (value) =>
-                  /^[a-zA-Z]+( [a-zA-Z]+)+$/.test(value) || "Nome inválido",
+                  /^[a-zA-Z]+( [a-zA-Z]+)+$/.test(value) || 'Nome inválido',
               },
             })}
             error={errors.employeeName?.message}
@@ -86,11 +85,11 @@ const NewUserPage = () => {
             placeholder="Email"
             label="Email"
             type="email"
-            {...register("email", {
-              required: "Email é obrigatório",
+            {...register('email', {
+              required: 'Email é obrigatório',
               pattern: {
                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: "Email inválido",
+                message: 'Email inválido',
               },
             })}
             error={errors.email?.message}
@@ -98,11 +97,11 @@ const NewUserPage = () => {
           <TextField
             placeholder="CPF"
             label="CPF"
-            {...register("cpf", {
-              required: "CPF é obrigatório",
+            {...register('cpf', {
+              required: 'CPF é obrigatório',
               validate: {
                 validCPF: (value) =>
-                  cpfCheck.validate(value.replace(/\D/g, "")) || "CPF inválido",
+                  cpfCheck.validate(value.replace(/\D/g, '')) || 'CPF inválido',
               },
             })}
             onChange={handleCPFChange}
@@ -111,8 +110,8 @@ const NewUserPage = () => {
           <TextField
             label="Data de admissão"
             type="date"
-            {...register("admissionDate", {
-              required: "Data de admissão é obrigatória",
+            {...register('admissionDate', {
+              required: 'Data de admissão é obrigatória',
             })}
             error={errors.admissionDate?.message}
           />
