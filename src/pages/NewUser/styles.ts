@@ -22,3 +22,9 @@ export const Card = styled.div`
     align-items: flex-start;
   }
 `;
+
+export const Form = styled.form`
+  div {
+    margin: 8px 0;
+  }
+`
