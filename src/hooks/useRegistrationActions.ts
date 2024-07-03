@@ -16,7 +16,7 @@ export const useRegistrationActions = () => {
     setIsLoading(true);
     try {
       const response = await getRegistrationsAction();
-      setRegistrations(response.data);
+      setRegistrations(response);
     } catch (error) {
       return error;
     }
@@ -27,7 +27,7 @@ export const useRegistrationActions = () => {
     setIsLoading(true);
     try {
       const response = await getRegistrationByCpfAction(cpf);
-      setRegistrations(response.data);
+      setRegistrations(response);
     } catch (error) {
       return error;
     }
