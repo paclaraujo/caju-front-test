@@ -39,7 +39,9 @@ export const TitleColumn = styled.h3<{ status: any }>`
   margin: 24px;
 `;
 
-export const CollumContent = styled.div`
+export const CollumContent = styled.div<{loading: string}>`
   overflow: auto;
+  ${({ loading }) => loading === 'loading' && "display: flex; flex-direction: column; align-items: center; justify-content: center;"}
+  min-height: 85%;
   max-height: 85%;
 `;

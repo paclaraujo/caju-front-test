@@ -1,6 +1,10 @@
 
 import * as S from "./styles";
 import RegistrationCard from "../RegistrationCard";
+import { RegistrationContext } from "~/contexts/RegistrationContext";
+import { useContext } from "react";
+import { Registration } from "~/types/types";
+import Spinner from "~/components/Spinner";
 
 const allColumns = [
   { status: 'REVIEW', title: "Pronto para revisar" },
@@ -8,10 +12,9 @@ const allColumns = [
   { status: 'REPROVED', title: "Reprovado" },
 ];
 
-type Props = {
-  registrations?: any[];
-};
-const Collumns = (props: Props) => {
+const Collumns = () => {
+  const { registrations, isLoading } = useContext(RegistrationContext);
+
   return (
     <S.Container>
       {allColumns.map((collum) => {
@@ -21,15 +24,17 @@ const Collumns = (props: Props) => {
               <S.TitleColumn status={collum.status}>
                 {collum.title}
               </S.TitleColumn>
-              <S.CollumContent>
-                {props?.registrations?.map((registration) => {
-                  return (
-                    <RegistrationCard
-                      data={registration}
-                      key={registration.id}
-                    />
-                  );
-                })}
+              <S.CollumContent loading={isLoading ? 'loading' : ''}>
+                { isLoading ? <Spinner /> : 
+                  registrations?.filter((registration: Registration) => registration.status === collum.status).map((registration: Registration) => {
+                    return (
+                      <RegistrationCard
+                        data={registration}
+                        key={registration.id}
+                      />
+                    );
+                  })
+                }
               </S.CollumContent>
             </>
           </S.Column>
