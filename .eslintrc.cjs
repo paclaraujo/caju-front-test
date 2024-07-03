@@ -1,4 +1,10 @@
 module.exports = {
+  env: {
+    node: true,  
+    browser: true,
+    es2021: true,
+    jest: true
+  },
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
@@ -13,6 +19,7 @@ module.exports = {
       version: 'detect',
     },
     'import/resolver': {
+      typescript: {},
       node: {
         paths: ['src'],
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
@@ -27,6 +34,7 @@ module.exports = {
     "react/display-name": "off",
     "@typescript-eslint/ban-types": "off",
     "import/named": "off",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "react/prop-types": "off"
   },
 };
