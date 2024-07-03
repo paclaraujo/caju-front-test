@@ -1,23 +1,24 @@
 import { useContext } from 'react';
-import axios from 'axios';
 import { RegistrationContext } from '~/contexts/RegistrationContext';
+import {
+  getRegistrationsAction,
+  getRegistrationByCpfAction,
+  createRegistrationAction,
+  updateRegistrationStatusAction,
+  deleteRegistrationAction
+} from '~/api/registrationActions';
 import { Registration } from '~/types/types';
 
 export const useRegistrationActions = () => {
   const { setRegistrations, setIsLoading } = useContext(RegistrationContext);
 
-  if (!import.meta.env.VITE_API_URL) {
-    throw new Error('REACT_APP_API_URL não está definido no arquivo .env');
-  }
-  const apiUrl = import.meta.env.VITE_API_URL;
-
   const getRegistrations = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`${apiUrl}/registrations`);
+      const response = await getRegistrationsAction();
       setRegistrations(response.data);
     } catch (error) {
-      return `Error fetching registrations: ${error}`;
+      return error;
     }
     setIsLoading(false);
   };
@@ -25,10 +26,10 @@ export const useRegistrationActions = () => {
   const getRegistrationByCpf = async (cpf: string) => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`${apiUrl}/registrations?cpf=${cpf}`);
+      const response = await getRegistrationByCpfAction(cpf);
       setRegistrations(response.data);
     } catch (error) {
-      `Error fetching registration by CPF: ${error}`;
+      return error;
     }
     setIsLoading(false);
   };
@@ -36,9 +37,9 @@ export const useRegistrationActions = () => {
   const createRegistration = async (data: Registration) => {
     setIsLoading(true);
     try {
-      return await axios.post(`${apiUrl}/registrations`, data);
+      await createRegistrationAction(data);
     } catch (error) {
-      return `Error posting registration status: ${error}`;
+      return error;
     }
     setIsLoading(false);
   };
@@ -46,7 +47,7 @@ export const useRegistrationActions = () => {
   const updateRegistrationStatus = async (data: Registration, status: 'REVIEW' | 'REPROVED' | 'APPROVED') => {
     setIsLoading(true);
     try {
-      await axios.put(`${apiUrl}/registrations/${data.id}`, { ...data, status });
+      await updateRegistrationStatusAction(data, status);
       setRegistrations((prevState) =>
         prevState.map((registration) => {
           if (registration.id === data.id) return { ...registration, status };
@@ -54,7 +55,7 @@ export const useRegistrationActions = () => {
         })
       );
     } catch (error) {
-      return `Error updating registration status: ${error}`;
+      return error;
     }
     setIsLoading(false);
   };
@@ -62,12 +63,12 @@ export const useRegistrationActions = () => {
   const deleteRegistration = async (data: Registration) => {
     setIsLoading(true);
     try {
-      await axios.delete(`${apiUrl}/registrations/${data.id}`);
+      await deleteRegistrationAction(data);
       setRegistrations((prevState) =>
         prevState.filter((registration) => registration.id !== data.id)
       );
     } catch (error) {
-      return `Error deleting registration: ${error}`;
+      return error;
     }
     setIsLoading(false);
   };
