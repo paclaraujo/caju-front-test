@@ -41,7 +41,7 @@ export const useRegistrationActions = () => {
       return `Error posting registration status: ${error}`;
     }
     setIsLoading(false);
-  }
+  };
 
   const updateRegistrationStatus = async (data: Registration, status: 'REVIEW' | 'REPROVED' | 'APPROVED') => {
     setIsLoading(true);

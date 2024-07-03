@@ -1,6 +1,6 @@
-import { createContext, useState, ReactNode } from "react";
+import { createContext, useState, ReactNode } from 'react';
 import Modal from '~/components/Modal';
-import Toast from "~/components/Toast";
+import Toast from '~/components/Toast';
 import { ModalContextType } from '~/types/types';
 
 interface ModalProviderProps {
@@ -11,7 +11,7 @@ type ToastType = 'success' | 'error';
 
 export const ModalContext = createContext<ModalContextType>({setModalOptions: () => {}});
 export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
-  const [toastOptions, setToastOptions] = useState({show: false, message: '', type: "sucess" as ToastType});
+  const [toastOptions, setToastOptions] = useState({show: false, message: '', type: 'sucess' as ToastType});
   const [modalOptions, setModalOptions] = useState({ show: false, children: null, handleOnConfirm: () => {}});
 
 
@@ -19,7 +19,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
     setModalOptions( prevState => ({...prevState, show: false}));
   };
 
-  const onModalConfirm = async () => { 
+  const onModalConfirm = async () => {
 
     try {
       modalOptions.handleOnConfirm();
@@ -29,11 +29,11 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
     }
 
     setModalOptions( prevState => ({...prevState, show: false}));
-  }
+  };
 
-  const onToastClose = () => { 
+  const onToastClose = () => {
     setToastOptions( prevState => ({...prevState, show: false}));
-  }
+  };
 
   return (
     <ModalContext.Provider value={{ setModalOptions }}>

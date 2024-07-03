@@ -1,5 +1,5 @@
-import axios from "axios";
-import { createContext, useState, useEffect, ReactNode } from "react";
+import axios from 'axios';
+import { createContext, useState, useEffect, ReactNode } from 'react';
 import { Registration, RegistrationContextType } from '~/types/types';
 
 interface RegistrationProviderProps {
@@ -26,10 +26,10 @@ export const RegistrationProvider: React.FC<RegistrationProviderProps> = ({ chil
     }
     setIsLoading(false);
   };
-  
+
   useEffect(() => {
     getRegistrations();
-  },[])
+  },[]);
 
   return (
     <RegistrationContext.Provider value={{registrations, setRegistrations, isLoading, setIsLoading}}>

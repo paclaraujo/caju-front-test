@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -17,4 +17,4 @@ export const Actions = styled.div`
 export const FilterInformations = styled.p`
   margin: 4px;
   font-size: 14px;
-`
+`;

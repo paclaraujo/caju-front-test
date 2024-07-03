@@ -1,6 +1,6 @@
-import Router from "~/router";
-import { Header } from "./components/Header";
-import { ModalProvider } from "./contexts/ModalContext";
+import Router from '~/router';
+import { Header } from './components/Header';
+import { ModalProvider } from './contexts/ModalContext';
 
 function App() {
   return (
