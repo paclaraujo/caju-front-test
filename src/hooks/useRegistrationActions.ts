@@ -6,10 +6,15 @@ import { Registration } from '~/types/types';
 export const useRegistrationActions = () => {
   const { setRegistrations, setIsLoading } = useContext(RegistrationContext);
 
+  if (!import.meta.env.VITE_API_URL) {
+    throw new Error('REACT_APP_API_URL não está definido no arquivo .env');
+  }
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const getRegistrations = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('http://localhost:3000/registrations');
+      const response = await axios.get(`${apiUrl}/registrations`);
       setRegistrations(response.data);
     } catch (error) {
       return `Error fetching registrations: ${error}`;
@@ -20,7 +25,7 @@ export const useRegistrationActions = () => {
   const getRegistrationByCpf = async (cpf: string) => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3000/registrations?cpf=${cpf}`);
+      const response = await axios.get(`${apiUrl}/registrations?cpf=${cpf}`);
       setRegistrations(response.data);
     } catch (error) {
       `Error fetching registration by CPF: ${error}`;
@@ -31,7 +36,7 @@ export const useRegistrationActions = () => {
   const createRegistration = async (data: Registration) => {
     setIsLoading(true);
     try {
-      return await axios.post("http://localhost:3000/registrations", data);
+      return await axios.post(`${apiUrl}/registrations`, data);
     } catch (error) {
       return `Error posting registration status: ${error}`;
     }
@@ -41,7 +46,7 @@ export const useRegistrationActions = () => {
   const updateRegistrationStatus = async (data: Registration, status: 'REVIEW' | 'REPROVED' | 'APPROVED') => {
     setIsLoading(true);
     try {
-      await axios.put(`http://localhost:3000/registrations/${data.id}`, { ...data, status });
+      await axios.put(`${apiUrl}/registrations/${data.id}`, { ...data, status });
       setRegistrations((prevState) =>
         prevState.map((registration) => {
           if (registration.id === data.id) return { ...registration, status };
@@ -57,7 +62,7 @@ export const useRegistrationActions = () => {
   const deleteRegistration = async (data: Registration) => {
     setIsLoading(true);
     try {
-      await axios.delete(`http://localhost:3000/registrations/${data.id}`);
+      await axios.delete(`${apiUrl}/registrations/${data.id}`);
       setRegistrations((prevState) =>
         prevState.filter((registration) => registration.id !== data.id)
       );

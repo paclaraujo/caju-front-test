@@ -11,10 +11,15 @@ export const RegistrationProvider: React.FC<RegistrationProviderProps> = ({ chil
   const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  if (!import.meta.env.VITE_API_URL) {
+    throw new Error('REACT_APP_API_URL não está definido no arquivo .env');
+  }
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const getRegistrations = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('http://localhost:3000/registrations');
+      const response = await axios.get(`${apiUrl}/registrations`);
       setRegistrations(response.data);
     } catch (error) {
       return `Error fetching registrations: ${error}`;
