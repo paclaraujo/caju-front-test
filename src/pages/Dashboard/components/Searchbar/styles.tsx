@@ -13,3 +13,8 @@ export const Actions = styled.div`
   align-items: center;
   gap: 16px;
 `;
+
+export const FilterInformations = styled.p`
+  margin: 4px;
+  font-size: 14px;
+`
