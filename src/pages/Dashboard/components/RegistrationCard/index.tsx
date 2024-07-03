@@ -6,13 +6,27 @@ import {
   HiOutlineCalendar,
   HiOutlineTrash,
 } from "react-icons/hi";
+import { useRegistrationActions } from '~/hooks/useRegistrationActions';
+import { ModalContext } from '~/contexts/ModalContext';
 import { Registration } from '~/types/types';
+import { useContext } from "react";
 
 type Props = {
   data: Registration;
 };
 
 const RegistrationCard = ({ data } : Props) => {
+  const { reproveRegistration, approveRegistration, reviewRegistration, deleteRegistration } = useRegistrationActions();
+  const { setModalOptions } = useContext(ModalContext);
+
+  const openModal = (text: string, action: (data: Registration) => void) => {
+    setModalOptions({
+      show: true,
+      children: <p>{text}</p>,
+      handleOnConfirm: () => action(data)
+    })
+  }
+
   return (
     <S.Card>
       <S.IconAndText>
@@ -31,14 +45,14 @@ const RegistrationCard = ({ data } : Props) => {
       {
           data.status === 'REVIEW' && 
           <div>
-            <Button size="small" onClick={() => {}} variant="reprove" >Reprovar</Button>
-            <Button size="small" onClick={() => {}} variant="approve">Aprovar</Button> 
+            <Button size="small" onClick={() => openModal("Tem certerza que deseja reprovar este registro?", reproveRegistration)} variant="reprove" >Reprovar</Button>
+            <Button size="small" onClick={() => openModal("Tem certerza que deseja aprovar este registro?", approveRegistration)} variant="approve">Aprovar</Button> 
           </div>
         }
         
-        {data.status === 'REPROVED' && <Button size="small" onClick={() => {}} variant="review">Revisar novamente</Button> }
+        {data.status === 'REPROVED' && <Button size="small" onClick={() => openModal("Tem certerza que deseja revisar este registro?", reviewRegistration)} variant="review">Revisar novamente</Button> }
 
-        <HiOutlineTrash />
+        <HiOutlineTrash onClick={() => openModal("Tem certerza que deseja excluir este registro?", deleteRegistration)} />
       </S.Actions>
     </S.Card>
   );
