@@ -22,14 +22,20 @@ export const IconAndText = styled.div`
   gap: 8px;
 `;
 
-export const Actions = styled.div`
+export const Actions = styled.div<{ status: any }>`
   margin-top: 8px;
   display: flex;
-  justify-content: space-between;
+  justify-content: ${({ status }) =>
+    status === "APPROVED" ? "flex-end" : "space-between"};
   align-items: center;
   gap: 4px;
 
   svg {
     cursor: pointer;
+  }
+
+  div {
+    display: flex;
+    gap: 12px;
   }
 `;

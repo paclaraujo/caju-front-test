@@ -1,4 +1,4 @@
-import { ButtonSmall } from "~/components/Buttons";
+import Button from "~/components/Button";
 import * as S from "./styles";
 import {
   HiOutlineMail,
@@ -6,30 +6,37 @@ import {
   HiOutlineCalendar,
   HiOutlineTrash,
 } from "react-icons/hi";
+import { Registration } from '~/types/types';
 
 type Props = {
-  data: any;
+  data: Registration;
 };
 
-const RegistrationCard = (props: Props) => {
+const RegistrationCard = ({ data } : Props) => {
   return (
     <S.Card>
       <S.IconAndText>
         <HiOutlineUser />
-        <h3>{props.data.employeeName}</h3>
+        <h3>{data.employeeName}</h3>
       </S.IconAndText>
       <S.IconAndText>
         <HiOutlineMail />
-        <p>{props.data.email}</p>
+        <p>{data.email}</p>
       </S.IconAndText>
       <S.IconAndText>
         <HiOutlineCalendar />
-        <span>{props.data.admissionDate}</span>
+        <span>{data.admissionDate}</span>
       </S.IconAndText>
-      <S.Actions>
-        <ButtonSmall bgcolor="rgb(255, 145, 154)" >Reprovar</ButtonSmall>
-        <ButtonSmall bgcolor="rgb(155, 229, 155)">Aprovar</ButtonSmall>
-        <ButtonSmall bgcolor="#ff8858">Revisar novamente</ButtonSmall>
+      <S.Actions status={data.status}>
+      {
+          data.status === 'REVIEW' && 
+          <div>
+            <Button size="small" onClick={() => {}} variant="reprove" >Reprovar</Button>
+            <Button size="small" onClick={() => {}} variant="approve">Aprovar</Button> 
+          </div>
+        }
+        
+        {data.status === 'REPROVED' && <Button size="small" onClick={() => {}} variant="review">Revisar novamente</Button> }
 
         <HiOutlineTrash />
       </S.Actions>
