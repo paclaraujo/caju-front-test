@@ -13,3 +13,7 @@ export interface RegistrationContextType {
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
+
+export interface ModalContextType {
+  setModalOptions: any;
+}
